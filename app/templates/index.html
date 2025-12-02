@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traefik Pulse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Traefik Pulse</h1>
+            <div class="controls">
+                <input type="text" id="date-range" placeholder="Select Time Range">
+                <button id="refresh-btn">Refresh</button>
+            </div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="card stat-card">
+                <h3>Total Requests</h3>
+                <p id="total-req">0</p>
+            </div>
+            <div class="card stat-card">
+                <h3>Avg Duration</h3>
+                <p id="avg-dur">0ms</p>
+            </div>
+            <div class="card stat-card">
+                <h3>Error Rate</h3>
+                <p id="error-rate">0%</p>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <div class="card chart-card wide">
+                <h3>Traffic Overview</h3>
+                <canvas id="trafficChart"></canvas>
+            </div>
+            <div class="card chart-card">
+                <h3>Status Codes</h3>
+                <canvas id="statusChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card logs-card">
+            <h3>Recent Logs</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Service</th>
+                            <th>Method</th>
+                            <th>Path</th>
+                            <th>Status</th>
+                            <th>Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logs-body">
+                        <!-- Logs here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

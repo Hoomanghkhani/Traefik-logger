@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  traefik:
+    image: traefik:v2.10
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--accesslog=true"
+      - "--accesslog.filepath=/var/log/traefik/access.log"
+      - "--accesslog.format=json"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "//var/run/docker.sock:/var/run/docker.sock"
+      - "./logs:/var/log/traefik"
+
+  whoami:
+    image: traefik/whoami
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=PathPrefix(`/whoami`)"
+      - "traefik.http.routers.whoami.entrypoints=web"
+
+  logger:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - "./logs:/var/log/traefik"
+      - "./app:/app"
+    environment:
+      - LOG_FILE_PATH=/var/log/traefik/access.log
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.logger.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.logger.entrypoints=web"
